@@ -23,9 +23,9 @@ app.set('view engine', 'pug');
 app.use('/', router);
 // HomePage
 router.get('/', (req, res) => {
-  res.render('view');
+  res.render('home');
 });
 // Server Start
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 4000, () => {
 	console.log('Server Is Online');
 });
