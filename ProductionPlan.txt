@@ -1,1 +1,3 @@
-TEST
+Steps:
+1. Creating basic files and installing modules. 0
+2. Creating database schemas and Homepage Route. 0
