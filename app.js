@@ -10,3 +10,7 @@ app.use(bodyParser.json());
 // Mongoose Setup
 mognoose.connect('mongodb://localhost/votingapp');
 const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Successfully Connected To The Database.')
+});
