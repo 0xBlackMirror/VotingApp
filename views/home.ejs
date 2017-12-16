@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Voting App By WackThat</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body{
+                font-family: arial;
+                margin: 0;
+            }
+            nav{
+                background: #ff5353;
+                padding: 20px 10px;
+            }
+            nav ul{
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 0;
+            }
+            nav li{
+                list-style-type: none;
+                display: inline-block;
+                margin: 0 10px 0 0;
+            }
+            nav a{
+                color: #fff;
+                font-size: 18px;
+                background: rgba(255,255,255,0.2);
+                text-decoration: none;
+                padding: 10px;
+                display: inline;
+            }
+            main, header{
+                max-width: 960px;
+                margin: 30px auto;
+                padding: 0 10px;
+                color: #333;
+            }
+            main li{
+                display: inline;
+                margin: 10px;
+            }
+            #welcome {
+                float: right;
+                margin-right: 10px;
+                display: inline;
+                color: #333;
+            }
+            #welcome-link a{
+                color: #fff;
+                text-decoration: none;
+                padding: 10px;
+                display: inline;
+            }
+            .newPoll{
+                float: right;
+            }
+            .alert-error {
+                color: #a94442;
+                background-color: #f2dede;
+                border-color: #edccd1; 
+            }
+            .alert-success_msg {
+               color: #3c763d;
+               background-color: #dff0d8;
+               border-color: #d6e9c6; 
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="/">Homepage</a></li>
+                <% if(user){ %>
+                <li><a href="/auth/logout">Logout</a></li>
+                <li id='welcome'>Welcome, <a id='welcome-link' href='/profile'><%=user.username%></a></li>
+                <% } else { %>
+                <li><a href="/auth/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <header>
+            <% if(user){ %>
+                <a href='/new/vote'><input class='btn btn-danger newPoll' type='button' value='New Poll'/></a>
+            <% } else { %>
+                <a href='/auth/login'><input class='btn btn-danger newPoll' type='button' value='Login To Create New Polls!'/></a>
+            <% } %>
+            <h1>Vote To Change!</h1>
+            <% if(message1.length > 0){ %>
+                <div class='alert alert-success alert-success_msg'><%-message1%></div>
+            <% } %>
+            <% if(voteSuccess.length > 0){ %>
+                <div class='alert alert-success alert-success_msg'><%-voteSuccess%></div>
+            <% } %>
+            <h2>Active Polls</h2>
+        </header>
+        <main>
+           <ul class='list-group'>
+                <% for(var i=0;i<polls.length;i++){ 
+                 console.log(polls); %>
+                  <li class="list-group-item"><a href='/poll/<%=polls[i]._id%>'> <%=polls[i].title %> </a></li>
+                <% } %>
+            </ul>
+            </ul>
+        </main>
+    </body>
+</html>

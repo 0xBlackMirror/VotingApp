@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>New Vote</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+        <style>
+            body{
+                font-family: arial;
+                margin: 0;
+            }
+            nav{
+                background: #ff5353;
+                padding: 20px 10px;
+            }
+            nav ul{
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 0;
+            }
+            nav li{
+                list-style-type: none;
+                display: inline-block;
+                margin: 0 10px 0 0;
+            }
+            nav a{
+                color: #fff;
+                font-size: 18px;
+                background: rgba(255,255,255,0.2);
+                text-decoration: none;
+                padding: 10px;
+                display: inline;
+            }
+            main, header{
+                max-width: 960px;
+                margin: 30px auto;
+                padding: 0 10px;
+                color: #333;
+            }
+            main li{
+                display: inline;
+                margin: 10px;
+            }
+            #welcome {
+                float: right;
+                margin-right: 10px;
+                display: inline;
+                color: #333;
+            }
+            #welcome-link a{
+                color: #fff;
+                text-decoration: none;
+                padding: 10px;
+                display: inline;
+            }
+            #newVote{
+                float: right;
+            }
+            .alert-error {
+                color: #a94442;
+                background-color: #f2dede;
+                border-color: #edccd1; 
+            }
+            .alert-success_msg {
+               color: #3c763d;
+               background-color: #dff0d8;
+               border-color: #d6e9c6; 
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="/">Homepage</a></li>
+                <% if(user){ %>
+                <!-- <li><a href="/profile">Profile</a></li> -->
+                <li><a href="/auth/logout">Logout</a></li>
+                <li id='welcome'>Welcome, <a id='welcome-link' href='/profile'><%=user.username%></a></li>
+                <% } else { %>
+                <li><a href="/auth/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <header>
+            <h1>New Vote:</h1>
+        </header>
+        <main>
+            <% if(message2.length > 0){ %>
+                <div class='alert alert-danger alert-error'><%-message2%></div>
+            <% } %>
+            <% if(!user){ %>
+            <h1>To Access this page you need to be logged in.</h1>
+            <% } else {%>
+            <form method='POST' action='/new/vote'>
+                <label for="voteTitle"><h4>Title:</h4></label><br>
+                <input type="text" name="voteTitle" id='voteTitle' style="width: 90%;" required><br>
+                <label for="voteOptions"><h4>Options (Seperated By Commas):</h4></label><br>
+                <textarea name='voteOptions' id='voteOptions' style="width: 90%;height:200px; resize: none;" required></textarea><br>
+                <input type="submit" name="submit" value='Post' class="btn btn-default">
+            </form>
+            <% } %>
+        </main>
+    </body>
+</html>
