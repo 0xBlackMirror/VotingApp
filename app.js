@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const newRoutes = require('./routes/new-routes');
 const voteRoutes = require('./routes/vote-routes');
+const deleteRoutes = require('./routes/delete-routes');
 const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
 const keys = require('./config/auth');
@@ -51,6 +52,7 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 app.use('/new', newRoutes);
 app.use('/poll', voteRoutes);
+app.use('/delete', deleteRoutes);
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -65,6 +67,7 @@ app.get('/', (req, res) => {
   		 user: req.user,
   		 message1: req.flash('success'),
   		 voteSuccess: req.flash('voteSuccess'),
+  		 delSuccess: req.flash('delSuccess'),
   		 polls: polls
   		});
   	}

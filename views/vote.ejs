@@ -5,6 +5,7 @@
         <title><%=poll.title%></title>
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
         <style>
             body{
                 font-family: arial;
@@ -67,6 +68,10 @@
                background-color: #dff0d8;
                border-color: #d6e9c6; 
             }
+
+            #voteForm {
+                padding: 75px 0 0 130px;
+            }
         </style>
     </head>
     <body>
@@ -88,7 +93,13 @@
             <% } %>
         </header>
         <main>
-            <form action='/poll/<%=poll.id%>' method="POST">
+            <%if(user.username == poll.creator){ %>
+            <form action="/delete/<%=poll.id%>" method="POST">
+              <input type="submit" id='pollDelete' class='btn btn-danger' value="Delete Poll" style="float: right;">
+            </form>
+            <% } %>
+            <canvas id='voteResults' style="max-width: 500px;max-height: 500px;float: right;"></canvas>
+            <form action='/poll/<%=poll.id%>' method="POST" id='voteForm'>
             <% 
             const pollOptions = poll.options;
             for(var i=0;i<pollOptions.length;i++){ %>
@@ -98,5 +109,55 @@
             <br><input class='btn btn-danger' type="submit" name="submit" value="Vote">
            </form>
         </main>
+        <script>
+            // Delete Button
+            let deleteBtn = document.getElementById('pollDelete');
+            deleteBtn.addEventListener('click', () => {
+                let confirm = window.confirm('Are you sure you want to delete that poll?');
+                if(confirm){
+                    window.location = '/delete/' + '<%-poll.id %>';
+                }
+            });
+            // Chart Script
+            let myChart = document.getElementById('voteResults').getContext('2d');
+            let votes = <%-locals.votes%>;
+            let votesArr = [];
+            let options = [];
+            for(let i=0;i<votes.length;i++){
+                if(!options.includes(votes[i].optionSelected)){
+                    options.push(votes[i].optionSelected);
+                }
+                votesArr.push(votes[i].optionSelected);
+            }
+            let votesData = [];
+            function getvotesData() {
+                var array = votesArr,
+                    map = new Map,
+                    result;
+
+                array.forEach(v => map.set(v, (map.get(v) || 0) + 1));
+                result = [...map.values()];
+                votesData = result;
+            }
+            getvotesData();
+            //console.log(votesData);
+            new Chart(myChart, {
+                type: 'pie',
+                data: {
+                    labels: options,
+                    datasets: [{
+                        data: votesData,
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                       ]
+                    }]
+                }
+            });
+        </script>
     </body>
 </html>

@@ -11,13 +11,16 @@ router.get('/:id', (req, res) => {
 	let pollId = req.params.id;
 	Poll.findById(pollId, (err, poll) => {
 		if(err) throw err;
-		res.render('vote', {user: req.user, poll: poll, voteFail: req.flash('voteFail')});
+		Vote.find({pollId: pollId}, (err, votes) => {
+			res.render('vote', {user: req.user, poll: poll, voteFail: req.flash('voteFail'),votes: JSON.stringify(votes)});
+			//console.log(votes);
+		});
 	});
 });
 // Vote POST Request
 router.post('/:id', (req, res) => {
 	let optionSelected = req.body.option;
-	console.log(optionSelected);
+	//console.log(optionSelected);
 	if(optionSelected == undefined){
 		req.flash('voteFail', 'Please Select An Option To Submit.');
 		res.redirect(req.header('Referer'));

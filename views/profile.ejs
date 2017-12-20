@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Profile</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
         <style>
             body{
                 font-family: arial;
@@ -55,7 +56,6 @@
             <ul>
                 <li><a href="/">Homepage</a></li>
                 <% if(user){ %>
-                <!-- <li><a href="/profile">Profile</a></li> -->
                 <li><a href="/auth/logout">Logout</a></li>
                 <li id='welcome'>Welcome, <a id='welcome-link' href='/profile'><%=user.username%></a></li>
                 <% } else { %>
@@ -67,7 +67,12 @@
             <h1>Welcome to your profile <%=user.username%></h1>
         </header>
         <main>
-            <p>Extra info about you</p>
+            <ul class='list-group'>
+                <h3>My Polls:</h3><br>
+                <% for(var i=0;i<polls.length;i++){ %>
+                  <li class="list-group-item"><a href='/poll/<%=polls[i]._id%>'> <%=polls[i].title %> </a></li>
+                <% } %>
+            </ul>
         </main>
     </body>
 </html>

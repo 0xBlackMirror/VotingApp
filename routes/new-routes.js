@@ -35,7 +35,8 @@ router.post('/vote', (req, res) => {
 		// Saves The Vote To The DB
 		let newPoll = new Poll({
 			title: req.body.voteTitle,
-			options: optionsArr
+			options: optionsArr,
+			creator: req.user.username
 		}).save().then((vote) => {
 			console.log('Vote has been successfully created!');
 			req.flash('success', 'Vote has been successfully created!');

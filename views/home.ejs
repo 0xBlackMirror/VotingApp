@@ -88,6 +88,9 @@
                 <a href='/auth/login'><input class='btn btn-danger newPoll' type='button' value='Login To Create New Polls!'/></a>
             <% } %>
             <h1>Vote To Change!</h1>
+            <% if(delSuccess.length > 0){ %>
+                <div class='alert alert-danger alert-error'><%-delSuccess%></div>
+            <% } %>
             <% if(message1.length > 0){ %>
                 <div class='alert alert-success alert-success_msg'><%-message1%></div>
             <% } %>
@@ -98,11 +101,9 @@
         </header>
         <main>
            <ul class='list-group'>
-                <% for(var i=0;i<polls.length;i++){ 
-                 console.log(polls); %>
+                <% for(var i=0;i<polls.length;i++){ %>
                   <li class="list-group-item"><a href='/poll/<%=polls[i]._id%>'> <%=polls[i].title %> </a></li>
                 <% } %>
-            </ul>
             </ul>
         </main>
     </body>
