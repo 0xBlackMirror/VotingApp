@@ -23,14 +23,14 @@ app.use(bodyParser.json());
 // Cookie Middlware
 app.use(cookieSession({
 	maxAge: 24*60*60*1000,
-	keys: [keys.session.cookieKey]
+	keys: [process.env.cookieKey]
 }));
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 // Express Session Middleware
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.CookieSecret,
     resave: true,
     saveUninitialized: true
   }));
