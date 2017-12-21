@@ -15,7 +15,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new GoogleStrategy({
-	//options for google strat
+	// options for google strat
 	callbackURL: keys.google.callbackURL,
 	clientID: keys.google.clientID,
 	clientSecret: process.env.ClientSecret
@@ -27,7 +27,7 @@ passport.use(new GoogleStrategy({
 			console.log('User is: ', currentUser);
 			done(null, currentUser);
 		} else {
-			// User doesn't exists, so we will create a new one
+			// User doesn't exists, so create a new one
 			new User({
 		    username: profile.displayName,
 		    googleid: profile.id
