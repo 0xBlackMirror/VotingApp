@@ -18,7 +18,7 @@ passport.use(new GoogleStrategy({
 	// options for google strat
 	callbackURL: keys.google.callbackURL,
 	clientID: keys.google.clientID,
-	clientSecret: process.env.ClientSecret
+	clientSecret: process.env.clientSecret
 }, (accessToken, refreshToken, profile, done) => {
 	// Check if user exists in db
 	User.findOne({googleid: profile.id}).then((currentUser) => {
