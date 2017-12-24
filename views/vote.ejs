@@ -93,11 +93,13 @@
             <% } %>
         </header>
         <main>
+          <% if(user){ %>
             <%if(user.username == poll.creator){ %>
             <form action="/delete/<%=poll.id%>" method="POST">
               <input type="submit" id='pollDelete' class='btn btn-danger' value="Delete Poll" style="float: right;">
             </form>
             <% } %>
+         <% } %>
             <canvas id='voteResults' style="max-width: 500px;max-height: 500px;float: right;"></canvas>
             <form action='/poll/<%=poll.id%>' method="POST" id='voteForm'>
             <% 
